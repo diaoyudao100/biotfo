@@ -1,11 +1,11 @@
 import { Hono } from 'hono'
 import type { HonoEnv } from '../../types'
-import { adminMiddleware } from '../../middleware/auth'
+import { authMiddleware, adminMiddleware } from '../../middleware/auth'
 import { ok, err } from '../../utils/response'
 
 const adminSettings = new Hono<HonoEnv>()
 
-adminSettings.use('*', adminMiddleware)
+adminSettings.use('*', authMiddleware, adminMiddleware)
 
 // GET / - 获取所有设置
 adminSettings.get('/', async (c) => {
