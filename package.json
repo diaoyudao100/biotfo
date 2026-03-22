@@ -1,0 +1,17 @@
+{
+  "name": "biotfo",
+  "private": true,
+  "workspaces": [
+    "packages/shared",
+    "packages/worker",
+    "packages/web"
+  ],
+  "scripts": {
+    "dev:worker": "npm -w packages/worker run dev",
+    "dev:web": "npm -w packages/web run dev",
+    "build:shared": "npm -w packages/shared run build",
+    "build:worker": "npm -w packages/worker run build",
+    "build:web": "npm -w packages/web run build",
+    "deploy:worker": "npm -w packages/worker run deploy"
+  }
+}

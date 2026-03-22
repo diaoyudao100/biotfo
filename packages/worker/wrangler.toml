@@ -1,0 +1,24 @@
+name = "biotfo-worker"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "biotfo-db"
+database_id = "placeholder-replace-after-creation"
+
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "biotfo-assets"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "placeholder-replace-after-creation"
+
+[vars]
+FRONTEND_URL = "http://localhost:3004"
+ASSETS_URL = "http://localhost:8788"
+
+[triggers]
+crons = ["*/1 * * * *"]

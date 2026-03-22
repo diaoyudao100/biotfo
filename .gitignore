@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.output/
+.nuxt/
+.wrangler/
+.dev.vars
+.env
+*.local
+.DS_Store
+Thumbs.db
