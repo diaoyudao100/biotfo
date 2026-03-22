@@ -14,8 +14,10 @@ export function corsMiddleware() {
         frontendUrl,
         'http://localhost:3000',
         'http://localhost:5173',
+        'https://biotfo-web.pages.dev',
       ]
-      if (allowedOrigins.includes(origin)) {
+      // 允许所有 *.biotfo-web.pages.dev 预览域名
+      if (allowedOrigins.includes(origin) || /\.biotfo-web\.pages\.dev$/.test(origin)) {
         return origin
       }
       return ''

@@ -12,8 +12,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:8788/api/v1',
-      assetsUrl: 'http://localhost:8788',
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://biotfo-worker.diaoyudao110.workers.dev/api/v1',
+      assetsUrl: process.env.NUXT_PUBLIC_ASSETS_URL || 'https://biotfo-worker.diaoyudao110.workers.dev',
     },
   },
   nitro: {

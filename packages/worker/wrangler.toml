@@ -6,7 +6,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "biotfo-db"
-database_id = "placeholder-replace-after-creation"
+database_id = "599aba38-a12f-4655-a2e9-fa239c7f6beb"
 
 [[r2_buckets]]
 binding = "ASSETS"
@@ -14,11 +14,11 @@ bucket_name = "biotfo-assets"
 
 [[kv_namespaces]]
 binding = "CACHE"
-id = "placeholder-replace-after-creation"
+id = "20630d1d0cf343aaa74d29a30abaa697"
 
 [vars]
-FRONTEND_URL = "http://localhost:3004"
-ASSETS_URL = "http://localhost:8788"
+FRONTEND_URL = "https://biotfo-web.pages.dev"
+ASSETS_URL = "https://biotfo-worker.diaoyudao110.workers.dev"
 
 [triggers]
 crons = ["*/1 * * * *"]
