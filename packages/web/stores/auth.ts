@@ -38,40 +38,40 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(payload: LoginPayload) {
     const config = useRuntimeConfig()
-    const data = await $fetch<{ user: User; token: string; refresh_token: string }>(
-      '/auth/login',
-      {
-        baseURL: config.public.apiBase,
-        method: 'POST',
-        body: payload,
-      },
-    )
-    user.value = data.user
-    setTokens(data.token, data.refresh_token)
-    return data
+    const res = await $fetch<{
+      success: boolean
+      data: { user: User; access_token: string; refresh_token: string }
+    }>('/auth/login', {
+      baseURL: config.public.apiBase,
+      method: 'POST',
+      body: payload,
+    })
+    user.value = res.data.user
+    setTokens(res.data.access_token, res.data.refresh_token)
+    return res.data
   }
 
   async function register(payload: RegisterPayload) {
     const config = useRuntimeConfig()
-    const data = await $fetch<{ user: User; token: string; refresh_token: string }>(
-      '/auth/register',
-      {
-        baseURL: config.public.apiBase,
-        method: 'POST',
-        body: payload,
-      },
-    )
-    user.value = data.user
-    setTokens(data.token, data.refresh_token)
-    return data
+    const res = await $fetch<{
+      success: boolean
+      data: { user: User; access_token: string; refresh_token: string }
+    }>('/auth/register', {
+      baseURL: config.public.apiBase,
+      method: 'POST',
+      body: payload,
+    })
+    user.value = res.data.user
+    setTokens(res.data.access_token, res.data.refresh_token)
+    return res.data
   }
 
   async function fetchMe() {
     if (!tokenCookie.value) return
     const { api } = useApi()
     try {
-      const data = await api<{ user: User }>('/auth/me')
-      user.value = data.user
+      const res = await api<{ success: boolean; data: User }>('/auth/me')
+      user.value = res.data
     } catch {
       logout()
     }

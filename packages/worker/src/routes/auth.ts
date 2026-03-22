@@ -89,6 +89,7 @@ auth.post('/register', async (c) => {
   return ok({
     user: { id: userId, phone, nickname: userNickname, role: 'customer' },
     access_token: accessToken,
+    refresh_token: refreshToken,
   })
 })
 
@@ -167,6 +168,7 @@ auth.post('/login', async (c) => {
       role: user.role,
     },
     access_token: accessToken,
+    refresh_token: refreshToken,
   })
 })
 
@@ -229,7 +231,7 @@ auth.post('/refresh', async (c) => {
   setTokenCookie(c, 'access_token', accessToken, 7200)
   setTokenCookie(c, 'refresh_token', newRefreshToken, 7 * 24 * 3600)
 
-  return ok({ access_token: accessToken })
+  return ok({ access_token: accessToken, refresh_token: newRefreshToken })
 })
 
 // ============================================================

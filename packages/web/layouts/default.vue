@@ -6,7 +6,10 @@
         <div class="flex items-center justify-between h-16">
           <!-- Logo -->
           <NuxtLink to="/" class="flex items-center space-x-2 flex-shrink-0">
-            <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+            <div v-if="siteStore.brandLogoUrl" class="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+              <img :src="siteStore.brandLogoUrl" alt="Logo" class="w-full h-full object-contain" />
+            </div>
+            <div v-else class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
               <span class="text-white font-bold text-sm">{{ siteStore.brandLogoLetter }}</span>
             </div>
             <span class="text-xl font-bold text-gray-900">{{ siteStore.brandName }}</span>
@@ -173,7 +176,10 @@
           <!-- Brand -->
           <div class="md:col-span-1">
             <div class="flex items-center space-x-2 mb-4">
-              <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
+              <div v-if="siteStore.brandLogoUrl" class="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+                <img :src="siteStore.brandLogoUrl" alt="Logo" class="w-full h-full object-contain" />
+              </div>
+              <div v-else class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
                 <span class="text-white font-bold text-sm">{{ siteStore.brandLogoLetter }}</span>
               </div>
               <span class="text-xl font-bold text-white">{{ siteStore.brandName }}</span>

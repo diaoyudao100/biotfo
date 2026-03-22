@@ -56,15 +56,15 @@ export function useApi() {
 
   async function attemptRefresh(): Promise<boolean> {
     try {
-      const data = await $fetch<{ token: string; refresh_token: string }>(
-        '/auth/refresh',
-        {
-          baseURL: config.public.apiBase,
-          method: 'POST',
-          body: { refresh_token: authStore.refreshTokenValue },
-        },
-      )
-      authStore.setTokens(data.token, data.refresh_token)
+      const res = await $fetch<{
+        success: boolean
+        data: { access_token: string; refresh_token: string }
+      }>('/auth/refresh', {
+        baseURL: config.public.apiBase,
+        method: 'POST',
+        body: { refresh_token: authStore.refreshTokenValue },
+      })
+      authStore.setTokens(res.data.access_token, res.data.refresh_token)
       return true
     } catch {
       return false

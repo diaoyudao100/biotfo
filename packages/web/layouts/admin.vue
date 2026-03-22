@@ -8,7 +8,10 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
           <NuxtLink to="/admin" class="flex items-center space-x-2">
-            <div class="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center">
+            <div v-if="siteStore.brandLogoUrl" class="w-7 h-7 rounded overflow-hidden flex-shrink-0">
+              <img :src="siteStore.brandLogoUrl" alt="Logo" class="w-full h-full object-contain" />
+            </div>
+            <div v-else class="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center">
               <span class="text-white font-bold text-xs">{{ siteStore.brandLogoLetter }}</span>
             </div>
             <span class="font-bold text-gray-900">{{ siteStore.brandName }}</span>
