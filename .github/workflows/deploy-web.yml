@@ -31,4 +31,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy packages/web/dist --project-name=biotfo-web --commit-dirty=true
+          command: pages deploy packages/web/dist --project-name=biotfo-web --commit-dirty=true --commit-message="deploy from CI"
