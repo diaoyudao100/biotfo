@@ -26,6 +26,19 @@ app.use('*', corsMiddleware())
 // 根路径 & 健康检查
 app.get('/', (c) => c.json({ name: 'Brand Store API', version: 'v1', docs: '/api/v1' }))
 app.get('/api/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
+
+// R2 静态资源访问 (图片等)
+app.get('/images/*', async (c) => {
+  const key = c.req.path.slice(1) // 去掉开头的 /
+  const object = await c.env.ASSETS.get(key)
+  if (!object) {
+    return c.json({ success: false, message: 'Not Found' }, 404)
+  }
+  const headers = new Headers()
+  headers.set('Content-Type', object.httpMetadata?.contentType || 'application/octet-stream')
+  headers.set('Cache-Control', 'public, max-age=31536000, immutable')
+  return new Response(object.body, { headers })
+})
 app.get('/api/v1', (c) => c.json({
   success: true,
   data: {
