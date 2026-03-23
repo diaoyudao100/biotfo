@@ -26,7 +26,6 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1.5">品牌 Logo</label>
             <div class="flex items-start space-x-4">
-              <!-- 当前 Logo 预览 -->
               <div class="flex-shrink-0">
                 <div
                   v-if="form.brand_logo_url"
@@ -125,6 +124,7 @@ definePageMeta({ layout: false })
 
 const config = useRuntimeConfig()
 const { api } = useApi()
+const authStore = useAuthStore()
 const siteStore = useSiteStore()
 
 const form = reactive({
@@ -146,7 +146,10 @@ onMounted(async () => {
       form.brand_logo_letter = res.data.brand_logo_letter || ''
       form.brand_logo_url = res.data.brand_logo_url || ''
     }
-  } catch {}
+  } catch (e: any) {
+    message.value = '加载设置失败: ' + (e?.data?.error?.message || e?.message || String(e))
+    messageType.value = 'error'
+  }
 })
 
 async function handleLogoUpload(e: Event) {
@@ -162,7 +165,7 @@ async function handleLogoUpload(e: Event) {
   uploading.value = true
   message.value = ''
   try {
-    const authStore = useAuthStore()
+    const arrayBuffer = await file.arrayBuffer()
     const res = await $fetch<{ success: boolean; data: { key: string; url: string } }>(
       '/admin/images/upload',
       {
@@ -172,18 +175,17 @@ async function handleLogoUpload(e: Event) {
           'Content-Type': file.type,
           Authorization: `Bearer ${authStore.token}`,
         },
-        body: file,
+        body: arrayBuffer,
       },
     )
     form.brand_logo_url = res.data.url
     message.value = 'Logo 上传成功'
     messageType.value = 'success'
-  } catch {
-    message.value = 'Logo 上传失败，请重试'
+  } catch (e: any) {
+    message.value = 'Logo 上传失败: ' + (e?.data?.error?.message || e?.message || String(e))
     messageType.value = 'error'
   } finally {
     uploading.value = false
-    // reset file input
     ;(e.target as HTMLInputElement).value = ''
   }
 }
@@ -213,12 +215,11 @@ async function handleSave() {
     message.value = '保存成功'
     messageType.value = 'success'
 
-    // 更新全局 store
     siteStore.brandName = form.brand_name.trim()
     siteStore.brandLogoLetter = (form.brand_logo_letter || form.brand_name.charAt(0)).trim()
     siteStore.brandLogoUrl = form.brand_logo_url
-  } catch {
-    message.value = '保存失败，请重试'
+  } catch (e: any) {
+    message.value = '保存失败: ' + (e?.data?.error?.message || e?.message || String(e))
     messageType.value = 'error'
   } finally {
     saving.value = false
